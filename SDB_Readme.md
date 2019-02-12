@@ -3,30 +3,6 @@ PillarStack_SDB Module
 This is an Idea on how this Pillar Module could be used as a SDB Module.
 The basic premise is that the pillar data will distributed via the file state to the minions
 
-This way we can then use that data the way sdb modules work:
-```
-cat /etc/salt/minion.d/sdb.conf
-stack:
-  driver: stack
-```
-```
-salt-call sdb.get sdb://stack/data
-```
-
-or by changing the sdb config to:
-```
-cat /etc/salt/minion.d/sdb.conf
-stack:
-  driver: stack
-
-data: sdb://stack/data
-```
-
-we can use:
-```
-salt-call config.get data
-```
-
 With this we can use config.get instead of pillar.get within our states or merge this data within the map.jinja file
 
 
@@ -34,7 +10,7 @@ Example
 ===========
 Clone to formulas, add to file_roots and restart master
 ```
-root@salt:/srv/formulas# git clone https://github.com/claudekenni/pillarstack_sdb.git
+root@master:/srv/formulas# git clone https://github.com/claudekenni/pillarstack_sdb.git
 Cloning into 'pillarstack_sdb'...
 remote: Enumerating objects: 27, done.
 remote: Counting objects: 100% (27/27), done.
@@ -45,10 +21,14 @@ Resolving deltas: 100% (95/95), done.
 Checking connectivity... done.
 root@salt:/srv/formulas# service salt-master restart
 ```
+Sync the SDB Module
+```
+root@minion:~# salt-call saltutil.sync_sdb
+```
 
 Apply the stack state
 ```
-root@salt:/srv/formulas# salt-call state.apply stack
+root@minion:/srv/formulas# salt-call state.apply stack
 local:
 ----------
           ID: copy-stack
@@ -168,7 +148,7 @@ Total run time: 334.682 ms
 
 Configuration
 ```
-cat /etc/salt/minion.d/sdb.conf:
+root@minion:~# cat /etc/salt/minion.d/sdb.conf:
 stack:
   driver: stack
 
@@ -177,7 +157,7 @@ data: sdb://stack/data
 
 Stack Tree
 ```
-tree /etc/salt/stack
+root@minion:~# tree /etc/salt/stack
 /etc/salt/stack
 ├── common
 │   ├── common.yml
@@ -196,13 +176,15 @@ tree /etc/salt/stack
 
 Check the Configuration
 ```
-root@salt:~# salt-call config.get data
+root@minion:~# salt-call config.get data
 local:
     ----------
     common:
         True
     core:
         Testvalue
+    minion:
+        value
     salt:
         ----------
         minion:
