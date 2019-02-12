@@ -28,7 +28,7 @@ root@minion:~# salt-call saltutil.sync_sdb
 
 Apply the stack state
 ```
-root@minion:/srv/formulas# salt-call state.apply stack
+root@minion:~# salt-call state.apply stack
 local:
 ----------
           ID: copy-stack
