@@ -48,7 +48,7 @@ root@salt:/srv/formulas# service salt-master restart
 
 Apply the stack state
 ```
-root@lab08ld100:/srv/formulas# salt-call state.apply stack
+root@salt:/srv/formulas# salt-call state.apply stack
 local:
 ----------
           ID: copy-stack
@@ -196,7 +196,7 @@ tree /etc/salt/stack
 
 Check the Configuration
 ```
-root@lab08ld100:~# salt-call config.get data
+root@salt:~# salt-call config.get data
 local:
     ----------
     common:
