@@ -1,4 +1,4 @@
-PillarStack_SDB Module
+sdbstack Module
 ===========
 This is an Idea on how this Pillar Module could be used as a SDB Module.
 The basic premise is that the pillar data will distributed via the file state to the minions
