@@ -165,5 +165,6 @@ def _parse_stack_cfg(content):
     return content.splitlines()
 
 def get(*args, **kwargs):
-    data = get_stack('/etc/salt/stack/stack.cfg')
+    __salt__['cp.cache_dir']('salt://stack')
+    data = get_stack(__salt__['cp.cache_file']('salt://stack/stack.cfg'))
     return(data)
